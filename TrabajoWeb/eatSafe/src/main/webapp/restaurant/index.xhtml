@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Restaurant CRUD</title>
+</h:head>
+<h:body>
+<h:form>
+    <div class="card">
+        <p:dataTable id="restaurantDataTable" var="restaurant" value="#{restaurantView.restaurants}" 
+        		selection="#{restaurantView.restaurantsSelected}" 
+        		rowKey="#{restaurant.id}" paginator="true" paginatorPosition="bottom"
+        		rows="3" sortMode="single" allowUnsorting="true">
+        	<p:column selectionMode="Multiple" style="width:16px;text-align:center" />
+        	
+            <p:column headerText="Id" sortBy="#{restaurant.id}">
+                <h:outputText value="#{restaurant.id}" />
+            </p:column>
+            <p:column headerText="Name" sortBy="#{restaurant.name}">
+                <h:outputText value="#{restaurant.name}" />
+            </p:column>
+            
+            <p:column>
+            	<p:commandButton icon="pi pi-pencil" oncomplete="PF('restaurantDialog').show()"
+            			styleClass="edit-button rounded-button ui-button-success" 
+            			update="@form:restaurant-content" process="@this">
+            		<f:setPropertyActionListener value="#{restaurant}" target="#{restaurantView.restaurantSelected}"/>
+            		<p:resetInput target="@form:restaurant-content"/>
+            	</p:commandButton>
+            	<p:commandButton icon="pi pi-trash" style="margin-left: 10px;"
+            			styleClass="rounded-button ui-button-danger" />
+            </p:column>
+            
+            <p:ajax event="rowSelectCheckbox" update="restaurant-button-delete restaurant-button-edit " />
+            <p:ajax event="rowUnselectCheckbox" update="restaurant-button-delete restaurant-button-edit" />
+            <p:ajax event="toggleSelect" update="restaurant-button-delete restaurant-button-edit" />            
+            
+            <f:facet name="footer">
+            	<p:commandButton process="restaurantDataTable" value="New" icon="pi pi-check" 
+            			actionListener="#{restaurantView.createNew}" update="@form:restaurant-content"
+            			oncomplete="PF('restaurantDialog').show()" styleClass="ui-button-raised ui-button-success" />
+            	
+            	<p:commandButton id="restaurant-button-edit" process="restaurantDataTable" value="Edit" icon="pi pi-check" 
+            			actionListener="#{restaurantView.editRestaurantSelected}" update="@form:restaurant-content"
+            			oncomplete="PF('restaurantDialog').show()" styleClass="ui-button-raised ui-button-help"
+            			disabled="#{!restaurantView.hasRestaurantSelected()}" />
+            	
+            	<p:commandButton id="restaurant-button-delete" process="restaurantDataTable" value="Delete" icon="pi pi-check" 
+            			oncomplete="PF('restaurantDialog').show()" styleClass="ui-button-raised ui-button-danger"
+            			disabled="#{!restaurantView.hasRestaurantsSelected()}" update="restaurantDataTable" />
+            </f:facet>
+        </p:dataTable>
+    </div>
+    <p:dialog header="Restaurant" widgetVar="restaurantDialog" modal="true" showEffect="fade"
+    		minHeight="300" width="300" responsive="true">
+    	<p:outputPanel id="restaurant-content" class="ui-fluid">
+       		<div class="p-field">
+       			<p:outputLabel for="name">Name</p:outputLabel>
+       			<p:inputText id="name" value="#{restaurantView.restaurantSelected.name}" required="true"/>
+               </div>
+        </p:outputPanel>  
+        <f:facet name="footer">
+         	<p:commandButton value="Save" icon="pi pi-check" actionListener="#{restaurantView.saveRestaurant}"
+            		update="restaurant-content restaurantDataTable" process="restaurant-content @this"/>
+         	<p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('restaurantDialog').hide()"
+            		class="ui-button-secondary"/>
+     	</f:facet>	
+    </p:dialog>
+</h:form>
+
+</h:body>
+</html>
