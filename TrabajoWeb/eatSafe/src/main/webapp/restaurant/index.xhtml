@@ -27,10 +27,12 @@
 								value="#{restaurantView.restaurantSearch.name}"
 								placeholder="Search" />
 						</span>
-						<p:commandButton value="Search" icon="pi pi-check"
+						<p:commandButton value="Search"
+							style="margin-right: 15px;margin-left:5px;color:black; background-color:#D8D8D8;"
 							actionListener="#{restaurantView.searchRestaurant}"
 							update="restaurantDataTable" process="globalSearch @this" />
-						<p:commandButton value="Clean" icon="pi pi-check"
+						<p:commandButton value="Clean" icon="pi pi-refresh"
+							style="color:black;background-color:#D8D8D8;"
 							actionListener="#{restaurantView.getAllRestaurant}"
 							update="restaurantDataTable" process="@this" />
 
@@ -56,7 +58,10 @@
 				<p:column headerText="Phone" sortBy="#{restaurant.phone}">
 					<h:outputText value="#{restaurant.phone}" />
 				</p:column>
-				<!--   <p:column headerText="Opinions" sortBy="#{restaurant.opinions}">
+				
+				
+				<!--
+				  <p:column headerText="Opinions" sortBy="#{restaurant.opinions}">
                 <h:outputText value="#{restaurant.opinions}" />
             </p:column>
               <p:column headerText="Tables" sortBy="#{restaurant.tables}">
@@ -64,14 +69,16 @@
             </p:column>-->
 				<p:column>
 					<p:commandButton icon="pi pi-pencil"
+						style="color: white;background-color: #5882FA;"
 						oncomplete="PF('restaurantDialog').show()"
-						styleClass="edit-button rounded-button ui-button-success"
+						styleClass="edit-button rounded-button ui-button-success "
 						update="@form:restaurant-content" process="@this">
 						<f:setPropertyActionListener value="#{restaurant}"
 							target="#{restaurantView.restaurantSelected}" />
 						<p:resetInput target="@form:restaurant-content" />
 					</p:commandButton>
-					<p:commandButton icon="pi pi-trash" style="margin-left: 10px;"
+					<p:commandButton icon="pi pi-trash"
+						style="margin-left: 10px; color:white;background-color: #FA5858;"
 						styleClass="rounded-button ui-button-danger" process="@this"
 						oncomplete="PF('deleteDialog').show()">
 						<f:setPropertyActionListener value="#{restaurant}"
@@ -88,13 +95,16 @@
 
 				<f:facet name="footer">
 					<p:commandButton process="restaurantDataTable" value="New"
-						icon="pi pi-check" actionListener="#{restaurantView.createNew}"
+						icon="pi pi-plus-circle"
+						style="margin-right: 10px; color:white;background-color: #04B404;"
+						actionListener="#{restaurantView.createNew}"
 						update="@form:restaurant-content"
 						oncomplete="PF('restaurantDialog').show()"
 						styleClass="ui-button-raised ui-button-success" />
 
 					<p:commandButton id="restaurant-button-edit"
-						process="restaurantDataTable" value="Edit" icon="pi pi-check"
+						process="restaurantDataTable" value="Edit" icon="pi pi-pencil"
+						style="margin-right: 10px; color:white;background-color: blue;"
 						actionListener="#{restaurantView.editRestaurantSelected}"
 						update="@form:restaurant-content"
 						oncomplete="PF('restaurantDialog').show()"
@@ -102,7 +112,8 @@
 						disabled="#{!restaurantView.hasRestaurantSelected()}" />
 
 					<p:commandButton id="restaurant-button-delete"
-						process="restaurantDataTable" value="Delete" icon="pi pi-check"
+						process="restaurantDataTable" value="Delete" icon="pi pi-trash"
+						style="margin-right: 10px; color:white;background-color: red;"
 						oncomplete="PF('restaurantDialog').show()"
 						styleClass="ui-button-raised ui-button-danger"
 						disabled="#{!restaurantView.hasRestaurantsSelected()}"
@@ -136,7 +147,9 @@
 					<p:inputText id="phone"
 						value="#{restaurantView.restaurantSelected.phone}" required="true" />
 				</div>
-				<!--<div class="p-field">
+		
+			<!--
+				<div class="p-field">
        			<p:outputLabel for="opinions">Opinions</p:outputLabel>
        			<p:inputText id="opinions" value="#{restaurantView.restaurantSelected.opinions}" required="true"/>
                </div>
