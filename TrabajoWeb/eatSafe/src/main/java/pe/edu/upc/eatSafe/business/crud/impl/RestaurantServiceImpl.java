@@ -1,5 +1,7 @@
 package pe.edu.upc.eatSafe.business.crud.impl;
 
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,6 +22,11 @@ public class RestaurantServiceImpl implements RestaurantService{
 	@Override
 	public JpaRepository<Restaurant, Integer> getJpaRepository() {
 		return restaurantRepository;
+	}
+	
+	@Override
+	public List<Restaurant> findByName(String name) throws Exception{
+		return restaurantRepository.findByName(name);
 	}
 
 }
