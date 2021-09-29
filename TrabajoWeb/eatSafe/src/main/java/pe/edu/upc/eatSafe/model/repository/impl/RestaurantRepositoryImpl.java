@@ -32,7 +32,14 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 	public List<Restaurant> findAll() throws Exception{
 		
 		String jpql = "SELECT restaurant FROM Restaurant restaurant";
-		return findAll(Restaurant.class, jpql);
+		return findByQuery(Restaurant.class, jpql);
+	}
+	
+	@Override
+	public List<Restaurant> findByName(String name) throws Exception{
+		String jpql = "SELECT r FROM Restaurant r WHERE r.name LIKE '%" + name +"%'";
+		System.out.println(jpql);
+		return findByQuery(Restaurant.class, jpql);
 	}
 	
 }
