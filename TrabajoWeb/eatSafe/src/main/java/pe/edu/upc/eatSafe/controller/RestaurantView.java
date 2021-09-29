@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,6 +25,7 @@ public class RestaurantView implements Serializable {
 	private List<Restaurant> restaurants;
 	private Restaurant restaurantSelected;
 	private List<Restaurant> restaurantsSelected;
+	private Restaurant restaurantSearch;
 
 	@Inject
 	private RestaurantService restaurantService;
@@ -30,14 +33,12 @@ public class RestaurantView implements Serializable {
 	@PostConstruct
 	public void init() {
 		restaurantsSelected = new ArrayList<>();
-		try {
-			restaurants = restaurantService.getAll();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		restaurantSearch = new Restaurant();
+		getAllRestaurant();
+		
 	}
 
-	public boolean hasRestaurantsSelected() {
+	public boolean hasRestaurantsSelected() { /* Manipulacion de interfaz has=(seleccionar cuadritos en la vista) */
 		if (restaurantsSelected.isEmpty()) {
 			return false;
 		}
@@ -45,7 +46,7 @@ public class RestaurantView implements Serializable {
 	}
 
 	public boolean hasRestaurantSelected() {
-		if (restaurantsSelected.size() == 1) {
+		if (restaurantsSelected.size() == 1) { /* para seleccionar solo 2 o 1 elemento */
 			return true;
 		}
 		return false;
@@ -86,15 +87,36 @@ public class RestaurantView implements Serializable {
 
 	public void deleteRestaurant() {
 		try {
-			if (restaurantSelected.getId() > 0) {
-				restaurantService.deleteById(restaurantSelected.getId());
-			}
+			this.restaurants.remove(restaurantSelected);
+			restaurantService.deleteById(this.restaurantSelected.getId());
+			this.restaurantSelected = null;
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Remove", "Item Removed"));
+		//PrimeFaces.current().ajax().update("form:messages","regionDataTable");
 	}
 
+	public void searchRestaurant() {
+		try	{
+			restaurants = restaurantService.findByName(restaurantSearch.getName());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void getAllRestaurant() {
+		try {
+			restaurants = restaurantService.getAll();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
 	public List<Restaurant> getRestaurants() {
 		return restaurants;
 	}
@@ -117,5 +139,12 @@ public class RestaurantView implements Serializable {
 
 	public void setRestaurantsSelected(List<Restaurant> restaurantsSelected) {
 		this.restaurantsSelected = restaurantsSelected;
+	}
+	
+	public Restaurant getRestaurantSearch() {
+		return restaurantSearch;
+	}
+	public void setRestaurantSearch(Restaurant restaurantSearch) {
+		this.restaurantSearch = restaurantSearch;
 	}
 }
