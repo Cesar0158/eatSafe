@@ -35,15 +35,15 @@ public class User {
 	@OneToOne
 	@MapsId 
 	@JoinColumn(name="id")
-	private Client client;
+	private Customer client;
 		
 	@OneToOne
 	@MapsId 
 	@JoinColumn(name="id")
-	private Admin admin;
+	private Administrador admin;
 
 	public User(Integer id, String name, String lastName, String phone, String email, String password, boolean enable,
-			Client client, Admin admin) {
+			Customer client, Administrador admin) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -117,19 +117,19 @@ public class User {
 		this.enable = enable;
 	}
 
-	public Client getClient() {
+	public Customer getClient() {
 		return client;
 	}
 
-	public void setClient(Client client) {
+	public void setClient(Customer client) {
 		this.client = client;
 	}
 
-	public Admin getAdmin() {
+	public Administrador getAdmin() {
 		return admin;
 	}
 
-	public void setAdmin(Admin admin) {
+	public void setAdmin(Administrador admin) {
 		this.admin = admin;
 	}
 	

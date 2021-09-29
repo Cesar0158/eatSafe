@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,11 +27,12 @@ public class Restaurant {
 	private Integer capacity;
 	@Column(name = "restaurant_phone", length = 9, nullable = false)
 	private String phone;
+		
 	@OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
-	private List<Opinion> opinions;
+	private List<Comment> opinions;
 	@OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
 	private List<Tables> tables;
-	public Restaurant(Integer id, String name, String address, Integer capacity, String phone, List<Opinion> opinions,
+	public Restaurant(Integer id, String name, String address, Integer capacity, String phone, List<Comment> opinions,
 			List<Tables> tables) {
 		super();
 		this.id = id;
@@ -41,12 +43,10 @@ public class Restaurant {
 		this.opinions = opinions;
 		this.tables = tables;
 	}
-	
 	public Restaurant() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -77,10 +77,11 @@ public class Restaurant {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public List<Opinion> getOpinions() {
+	
+	public List<Comment> getOpinions() {
 		return opinions;
 	}
-	public void setOpinions(List<Opinion> opinions) {
+	public void setOpinions(List<Comment> opinions) {
 		this.opinions = opinions;
 	}
 	public List<Tables> getTables() {
@@ -89,5 +90,8 @@ public class Restaurant {
 	public void setTables(List<Tables> tables) {
 		this.tables = tables;
 	}
+	
+
+	
 	
 }
