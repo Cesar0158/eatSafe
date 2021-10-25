@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Client {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "client_id")
+	@Column(name = "client_id", nullable=false)
 	private Integer id;
 	@Column(name = "client_email", length = 30, nullable = false)
 	private String email;

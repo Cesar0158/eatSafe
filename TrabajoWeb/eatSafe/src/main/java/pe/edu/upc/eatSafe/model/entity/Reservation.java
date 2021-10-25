@@ -29,7 +29,7 @@ public class Reservation {
 	private Date date;
 	@ManyToOne
 	@JoinColumn(name = "client_id",nullable = false)//Foreing Key
-	private Customer client;
+	private Client client;
 	
 	@ManyToOne
 	@JoinColumn(name = "restaurant_id",nullable = false)//Foreing Key
@@ -38,7 +38,7 @@ public class Reservation {
 	private List<ParkingReservation> parkingReservations;
 	@OneToMany(mappedBy = "reservation", fetch = FetchType.LAZY)
 	private List<TableReservation> tableReservations;
-	public Reservation(Integer id, Date date, Customer client, Restaurant restaurant,
+	public Reservation(Integer id, Date date, Client client, Restaurant restaurant,
 			List<ParkingReservation> parkingReservations, List<TableReservation> tableReservations) {
 		super();
 		this.id = id;
@@ -66,10 +66,10 @@ public class Reservation {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public Customer getClient() {
+	public Client getClient() {
 		return client;
 	}
-	public void setClient(Customer client) {
+	public void setClient(Client client) {
 		this.client = client;
 	}
 	public Restaurant getRestaurant() {

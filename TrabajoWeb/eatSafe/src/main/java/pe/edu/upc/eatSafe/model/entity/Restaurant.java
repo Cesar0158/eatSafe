@@ -8,12 +8,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Restaurants")
+
 public class Restaurant {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +29,10 @@ public class Restaurant {
 	private String phone;
 		
 	@OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
-	private List<Comment> opinions;
+	private List<Opinion> opinions;
 	@OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
 	private List<Tables> tables;
-	public Restaurant(Integer id, String name, String address, Integer capacity, String phone, List<Comment> opinions,
+	public Restaurant(Integer id, String name, String address, Integer capacity, String phone, List<Opinion> opinions,
 			List<Tables> tables) {
 		super();
 		this.id = id;
@@ -78,10 +78,10 @@ public class Restaurant {
 		this.phone = phone;
 	}
 	
-	public List<Comment> getOpinions() {
+	public List<Opinion> getOpinions() {
 		return opinions;
 	}
-	public void setOpinions(List<Comment> opinions) {
+	public void setOpinions(List<Opinion> opinions) {
 		this.opinions = opinions;
 	}
 	public List<Tables> getTables() {

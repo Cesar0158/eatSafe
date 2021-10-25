@@ -2,6 +2,8 @@ package pe.edu.upc.eatSafe.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(name = "user_name", length = 30, nullable = false)
@@ -34,16 +37,16 @@ public class User {
 	
 	@OneToOne
 	@MapsId 
-	@JoinColumn(name="id")
-	private Customer client;
+	@JoinColumn(name="id", nullable=false)
+	private Client client;
 		
 	@OneToOne
 	@MapsId 
 	@JoinColumn(name="id")
-	private Administrador admin;
+	private Admin admin;
 
 	public User(Integer id, String name, String lastName, String phone, String email, String password, boolean enable,
-			Customer client, Administrador admin) {
+			Client client, Admin admin) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -117,19 +120,19 @@ public class User {
 		this.enable = enable;
 	}
 
-	public Customer getClient() {
+	public Client getClient() {
 		return client;
 	}
 
-	public void setClient(Customer client) {
+	public void setClient(Client client) {
 		this.client = client;
 	}
 
-	public Administrador getAdmin() {
+	public Admin getAdmin() {
 		return admin;
 	}
 
-	public void setAdmin(Administrador admin) {
+	public void setAdmin(Admin admin) {
 		this.admin = admin;
 	}
 	
