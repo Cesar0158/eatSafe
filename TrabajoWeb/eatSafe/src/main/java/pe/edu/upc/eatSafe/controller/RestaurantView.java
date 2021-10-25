@@ -38,7 +38,7 @@ public class RestaurantView implements Serializable {
 		
 	}
 
-	public boolean hasRestaurantsSelected() { /* Manipulacion de interfaz has=(seleccionar cuadritos en la vista) */
+	public boolean hasRestaurantsSelected() { 
 		if (restaurantsSelected.isEmpty()) {
 			return false;
 		}
@@ -46,7 +46,7 @@ public class RestaurantView implements Serializable {
 	}
 
 	public boolean hasRestaurantSelected() {
-		if (restaurantsSelected.size() == 1) { /* para seleccionar solo 2 o 1 elemento */
+		if (restaurantsSelected.size() == 1) { 
 			return true;
 		}
 		return false;
@@ -97,7 +97,7 @@ public class RestaurantView implements Serializable {
 		}
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Remove", "Item Removed"));
-		//PrimeFaces.current().ajax().update("form:messages","regionDataTable");
+		
 	}
 
 	public void searchRestaurant() {
